@@ -1,0 +1,70 @@
+
+Q.1
+
+ Find the number of students who scored less than 5(50%).
+
+A = load'/studentDS.txt' using PigStorage(',') As(name:chararray,college:chararray,dob:chararray,stream:chararray,grade:float,state:chararray,city:chararray);
+
+B = foreach A generate name,grade;
+
+C = filter B by grade<5;
+
+D = foreach C generate name,grade;
+
+E = Group D All;
+
+F = foreach E generate COUNT(D.name);
+
+Dump F;
+
+
+
+Q.2
+
+ List the name of students who are from Alaska.
+
+A = load'/studentDS.txt' using PigStorage(',') As(name:chararray,college:chararray,dob:chararray,major:chararray,grade:float,state:chararray,city:chararray);
+
+B = foreach A generate name,state;
+
+C = filter B by state=='alaska';
+
+D = foreach C generate name;
+
+Dump D;
+
+
+
+Q.3 How many goverenment colleges are there in alabama?   
+
+A = load'/studentDS.txt' using PigStorage(',') As(name:chararray,college:chararray,dob:chararray,major:chararray,grade:float,state:chararray,city:chararray);
+
+B = foreach A generate college,state;
+
+C = filter B by college=='goverenment' and state=='alabama';
+
+D = foreach C generate college;
+
+E = group D all;
+
+F = foreach E generate COUNT(D.college);
+
+
+Dump F
+
+
+
+Q.4
+
+ List the name of students who are from Oregon and persuing BE.
+
+A = load'/studentDS.txt' using PigStorage(',') As(name:chararray,college:chararray,dob:chararray,major:chararray,grade:float,state:chararray,city:chararray);
+
+B = foreach A generate name,major,state;
+
+C = filter B by state=='oregon' and major =='BE';
+
+D = foreach C generate name;
+
+Dump D;
+
